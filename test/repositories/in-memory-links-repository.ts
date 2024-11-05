@@ -18,4 +18,8 @@ export class InMemoryLinksRepository implements LinksRepository {
     const index = this.items.findIndex((item) => item.id === link.id)
     this.items[index] = link
   }
+
+  async delete(link: Link) {
+    this.items = this.items.filter((item) => item.id !== link.id)
+  }
 }

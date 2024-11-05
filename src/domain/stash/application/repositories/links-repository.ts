@@ -4,4 +4,5 @@ export interface LinksRepository {
   create(link: Link): Promise<void>
   findById(id: string): Promise<Link | null>
   save(link: Link): Promise<void>
+  delete(link: Link): Promise<void>
 }

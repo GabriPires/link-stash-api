@@ -10,7 +10,7 @@ beforeEach(() => {
   sut = new CreateLinkUseCase(linksRepository)
 })
 
-describe('CreateLink', () => {
+describe('create link use case', () => {
   it('should be able to create a link', async () => {
     const { link } = await sut.execute({
       ownerId: '123',

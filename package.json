@@ -13,7 +13,8 @@
   "license": "ISC",
   "description": "",
   "dependencies": {
-    "dayjs": "^1.11.13"
+    "dayjs": "^1.11.13",
+    "zod": "^3.23.8"
   },
   "devDependencies": {
     "@faker-js/faker": "^9.2.0",

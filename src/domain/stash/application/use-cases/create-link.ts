@@ -1,6 +1,7 @@
 import { UniqueEntityId } from '@/core/entities/value-objects/unique-entity-id'
 import { Link } from '../../enterprise/entities/link'
 import type { LinksRepository } from '../repositories/links-repository'
+import { z } from 'zod'
 
 interface CreateLinkUseCaseRequest {
   url: string
@@ -18,9 +19,15 @@ export class CreateLinkUseCase {
     ownerId,
     url,
   }: CreateLinkUseCaseRequest): Promise<CreateLinkUseCaseResponse> {
+    const parsedUrl = z.string().url().safeParse(url)
+
+    if (!parsedUrl.success) {
+      throw new Error('Provided URL is not valid.')
+    }
+
     const link = Link.create({
       ownerId: new UniqueEntityId(ownerId),
-      url,
+      url: parsedUrl.data,
     })
 
     await this.linksRepository.create(link)

@@ -19,4 +19,13 @@ describe('CreateLink', () => {
 
     expect(link.id.toString()).toBe('123')
   })
+
+  it('should throw an error if the URL is not valid', async () => {
+    await expect(() =>
+      sut.execute({
+        ownerId: '123',
+        url: 'invalid-url',
+      }),
+    ).rejects.toBeInstanceOf(Error)
+  })
 })

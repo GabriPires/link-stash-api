@@ -17,7 +17,7 @@ describe('CreateLink', () => {
       url: 'https://example.com',
     })
 
-    expect(link.id.toString()).toBe('123')
+    expect(link.ownerId.toString()).toBe('123')
   })
 
   it('should throw an error if the URL is not valid', async () => {

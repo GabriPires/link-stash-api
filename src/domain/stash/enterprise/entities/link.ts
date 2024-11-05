@@ -6,7 +6,7 @@ import dayjs from 'dayjs'
 export interface LinkProps {
   ownerId: UniqueEntityId
   url: string
-  lastAccessedAt: Date | null
+  lastAccessedAt?: Date
   createdAt: Date
   updatedAt?: Date
 }
@@ -20,7 +20,7 @@ export class Link extends Entity<LinkProps> {
     return this.props.ownerId
   }
 
-  get lastAccessedAt(): Date | null {
+  get lastAccessedAt(): Date | undefined {
     return this.props.lastAccessedAt
   }
 
@@ -50,7 +50,10 @@ export class Link extends Entity<LinkProps> {
     this.props.updatedAt = new Date()
   }
 
-  static create(props: Optional<LinkProps, 'createdAt'>, id?: UniqueEntityId) {
+  static create(
+    props: Optional<LinkProps, 'createdAt' | 'lastAccessedAt'>,
+    id?: UniqueEntityId,
+  ) {
     const link = new Link(
       {
         ...props,

@@ -9,6 +9,7 @@ export function makeLink(
   const link = Link.create(
     {
       ownerId: new UniqueEntityId(),
+      stashId: new UniqueEntityId(),
       url: faker.internet.url(),
       ...override,
     },

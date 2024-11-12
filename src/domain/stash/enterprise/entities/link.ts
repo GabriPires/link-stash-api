@@ -6,6 +6,7 @@ import dayjs from 'dayjs'
 export interface LinkProps {
   ownerId: UniqueEntityId
   url: string
+  stashId: UniqueEntityId
   lastAccessedAt?: Date
   createdAt: Date
   updatedAt?: Date
@@ -20,12 +21,21 @@ export class Link extends Entity<LinkProps> {
     return this.props.ownerId
   }
 
+  get stashId() {
+    return this.props.stashId
+  }
+
   get lastAccessedAt(): Date | undefined {
     return this.props.lastAccessedAt
   }
 
   set lastAccessedAt(date: Date) {
     this.props.lastAccessedAt = date
+    this.touch()
+  }
+
+  set stashId(stashId: UniqueEntityId) {
+    this.props.stashId = stashId
     this.touch()
   }
 

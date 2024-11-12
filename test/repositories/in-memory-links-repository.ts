@@ -14,6 +14,10 @@ export class InMemoryLinksRepository implements LinksRepository {
     return link || null
   }
 
+  async findManyByStashId(stashId: string): Promise<Link[]> {
+    return this.items.filter((link) => link.stashId.toString() === stashId)
+  }
+
   async save(link: Link) {
     const index = this.items.findIndex((item) => item.id === link.id)
     this.items[index] = link

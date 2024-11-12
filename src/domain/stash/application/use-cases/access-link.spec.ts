@@ -19,12 +19,16 @@ describe('access link use case', () => {
 
     expect(link.isRecentlyAccessed).toBe(false)
 
-    const { link: updatedLink } = await sut.execute({
+    const response = await sut.execute({
       linkId: link.id.toString(),
     })
 
-    expect(updatedLink.lastAccessedAt).not.toBeNull()
-    expect(updatedLink.lastAccessedAt).toBeInstanceOf(Date)
-    expect(updatedLink.isRecentlyAccessed).toBe(true)
+    expect(response.isRight()).toBe(true)
+    expect(response.value).toMatchObject({
+      link: expect.objectContaining({
+        lastAccessedAt: expect.any(Date),
+        isRecentlyAccessed: true,
+      }),
+    })
   })
 })

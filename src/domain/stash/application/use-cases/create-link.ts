@@ -2,15 +2,20 @@ import { UniqueEntityId } from '@/core/entities/value-objects/unique-entity-id'
 import { Link } from '../../enterprise/entities/link'
 import type { LinksRepository } from '../repositories/links-repository'
 import { z } from 'zod'
+import { InvalidPayloadError } from './errors/invalid-payload-error'
+import { left, right, type Either } from '@/core/entities/either'
 
 interface CreateLinkUseCaseRequest {
   url: string
   ownerId: string
 }
 
-interface CreateLinkUseCaseResponse {
-  link: Link
-}
+type CreateLinkUseCaseResponse = Either<
+  InvalidPayloadError,
+  {
+    link: Link
+  }
+>
 
 export class CreateLinkUseCase {
   constructor(private linksRepository: LinksRepository) {}
@@ -22,7 +27,7 @@ export class CreateLinkUseCase {
     const parsedUrl = z.string().url().safeParse(url)
 
     if (!parsedUrl.success) {
-      throw new Error('Provided URL is not valid.')
+      return left(new InvalidPayloadError())
     }
 
     const link = Link.create({
@@ -32,6 +37,6 @@ export class CreateLinkUseCase {
 
     await this.linksRepository.create(link)
 
-    return { link }
+    return right({ link })
   }
 }

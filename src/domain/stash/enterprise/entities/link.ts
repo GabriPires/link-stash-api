@@ -57,7 +57,7 @@ export class Link extends Entity<LinkProps> {
     const link = new Link(
       {
         ...props,
-        createdAt: new Date(),
+        createdAt: props.createdAt ?? new Date(),
       },
       id,
     )
